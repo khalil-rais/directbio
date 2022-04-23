@@ -1,0 +1,20 @@
+searchproduct.autocomplete:
+  path: '/direktbio/autocomplete'
+  defaults:
+    _controller: '\Drupal\direktbio\Controller\SearchProductController::autocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+searchproduct.form:
+  path:  '/searchproduct/form'
+  defaults:
+    _form: '\Drupal\direktbio\Form\SearchProductForm'
+  requirements:
+    _permission: 'access content'
+ipe_debug3:
+  path:  '/direktbio/debug1'
+  defaults:
+    _controller:  '\Drupal\direktbio\Controller\ParfumController::ipe_debug1'
+    _title: 'Testing debugging features'
+  requirements:
+    _permission: 'access content'

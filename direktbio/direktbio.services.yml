@@ -1,0 +1,5 @@
+services:
+  direktbio.email:
+    class: Drupal\direktbio\DirektbioMailService
+    tags:
+      - { name: 'direktbio_mail_service' }
