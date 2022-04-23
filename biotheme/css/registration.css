@@ -1,0 +1,235 @@
+.submit_new_style {
+	padding: 35px 40px 90px;
+	background-color: #eff3f6;
+}
+.border-bottom::before {
+	border-bottom: 1px solid #dedede;
+	bottom: -11px;
+	content: "";
+	height: 1px;
+	left: 3%;
+	position: absolute;
+	width: 94%;
+}
+.white-section {
+	background-color: #fff;
+	border-radius: 5px;
+	float: left;
+	margin-bottom: 20px;
+	padding: 30px;
+	width: 100%;
+}
+.border-bottom {
+	position: relative;
+}
+form#user-register-form .input-group-addon {
+	background-color: #009688;
+	border-width: 1px;
+	border-color: transparent;
+	border-style: solid;
+	width: 39px;
+	height: 44px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	text-align: center;
+	padding-top: 6px;
+}
+form#user-register-form div.form-group{
+	margin-bottom: 0;
+}
+form#user-register-form .input-group-addon i{
+	color: #ffffff;
+}
+form#user-register-form.user-register-form.user-form div.form-group div.input-group > div.js-form-item.form-item{
+	max-width: 80%;
+}
+form#user-register-form div.page-container-four div.white-section.border-bottom div.form-group div.input-group div.js-form-item.form-item input{
+	border-radius: 0px;
+	border: 1px solid rgba(0, 150, 136, 0.42);
+	height: 44px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+form#user-register-form.user-register-form.user-form div.js-form-type-email.form-item-mail.js-form-item-mail label,
+form#user-register-form.user-register-form.user-form div.js-form-type-textfield.form-item-name.js-form-item-name label,
+form#user-register-form.user-register-form.user-form div.js-form-type-password.form-item-pass-pass1.js-form-item-pass-pass1 label,
+form#user-register-form.user-register-form.user-form div.js-form-type-password.form-item-pass-pass2.js-form-item-pass-pass2 label{
+	display: none;
+}
+form#user-register-form.user-register-form.user-form div.js-form-item.form-item div.description{
+	display: none;
+}
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-nom-et-prenom-wrapper div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-pseudonyme-public-wrapper div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-annee-de-naissance'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-profession'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-centres-d-interet'] div.js-form-item.form-item label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-de-telephone'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-user-picture'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-civilite'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-adresse'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-societe'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-site-web'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-categories'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-facebook'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-linkedin'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-google-plus'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-twitter'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-instagram'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-pinterest'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-registre-de-commerce'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-gerant-d-entreprise'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-matricule-fiscal'] div.js-form-item.form-item  label,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-du-gerant'] div.js-form-item.form-item  label{
+	color: #009688;
+	font-weight: 600;
+}
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-nom-et-prenom-wrapper div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-pseudonyme-public-wrapper div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-annee-de-naissance'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-profession'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-centres-d-interet'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-de-telephone'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-user-picture'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-civilite'] div.js-form-item.form-item select,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-adresse'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-societe'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-site-web'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-categories'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-facebook'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-linkedin'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-google-plus'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-twitter'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-instagram'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-pinterest'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-registre-de-commerce'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-gerant-d-entreprise'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-matricule-fiscal'] div.js-form-item.form-item  input,
+form#user-register-form.user-register-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-du-gerant'] div.js-form-item.form-item  input{
+	border-radius: 0px;
+	border: 1px solid rgba(0, 150, 136, 0.42);
+	height: 44px;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+form#user-register-form.user-register-form.user-form div#edit-field-numero-de-telephone-wrapper label.js-form-required.form-required::after {
+	content: " *";
+	color: #f00;
+}
+
+ul.nav.nav-tabs.registration {
+	font-size: 20px;
+}
+ul.nav.nav-tabs.registration li.nav-item a.nav-link[data-toggle]:not(.collapsed)::after {
+	display: none;
+}
+ul.nav.registration.nav-tabs li.nav-item a.nav-link.active{
+	color:#009688;
+}
+/**************************************************************************/
+/*************************************************************************/
+
+form#user-form div.tab-pane div.description{
+	display:none;
+}
+
+form#user-form .input-group-addon {
+	background-color: #009688;
+	border-width: 1px;
+	border-color: transparent;
+	border-style: solid;
+	width: 39px;
+	height: 44px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	text-align: center;
+	padding-top: 6px;
+}
+form#user-form div.form-group{
+	margin-bottom: 0;
+}
+form#user-form .input-group-addon i{
+	color: #ffffff;
+}
+form#user-form.user-form div.form-group div.input-group > div.js-form-item.form-item{
+	max-width: 80%;
+}
+form#user-form div.page-container-four div.white-section.border-bottom div.form-group div.input-group div.js-form-item.form-item input{
+	border-radius: 0px;
+	border: 1px solid rgba(0, 150, 136, 0.42);
+	height: 44px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+form#user-form.user-form div.js-form-type-email.form-item-mail.js-form-item-mail label,
+form#user-form.user-form div.js-form-type-textfield.form-item-name.js-form-item-name label,
+form#user-form.user-form div.js-form-type-password.form-item-current-pass.js-form-item-current-pass label,
+form#user-form.user-form div.js-form-type-password.form-item-pass-pass1.js-form-item-pass-pass1 label,
+form#user-form.user-form div.js-form-type-password.form-item-pass-pass2.js-form-item-pass-pass2 label{
+	display: none;
+}
+form#user-form.user-form div.js-form-item.form-item div.description{
+	display: none;
+}
+form#user-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-nom-et-prenom-wrapper div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-pseudonyme-public-wrapper div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-annee-de-naissance'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-profession'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-centres-d-interet'] div.js-form-item.form-item label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-de-telephone'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-user-picture'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-civilite'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-adresse'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-societe'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-site-web'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-categories'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-facebook'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-linkedin'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-google-plus'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-twitter'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-instagram'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-pinterest'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-registre-de-commerce'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-gerant-d-entreprise'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-matricule-fiscal'] div.js-form-item.form-item  label,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-du-gerant'] div.js-form-item.form-item  label{
+	color: #009688;
+	font-weight: 600;
+}
+form#user-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-nom-et-prenom-wrapper div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row.form-group div.form-group div#edit-field-pseudonyme-public-wrapper div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-annee-de-naissance'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-profession'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-centres-d-interet'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-de-telephone'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-user-picture'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-civilite'] div.js-form-item.form-item select,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-adresse'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-societe'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-site-web'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-categories'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-facebook'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-linkedin'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-google-plus'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-twitter'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-instagram'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-pinterest'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-registre-de-commerce'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-gerant-d-entreprise'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-matricule-fiscal'] div.js-form-item.form-item  input,
+form#user-form.user-form div.white-section.border-bottom div.row div.form-group div[id^='edit-field-numero-du-gerant'] div.js-form-item.form-item  input{
+	border-radius: 0px;
+	border: 1px solid rgba(0, 150, 136, 0.42);
+	height: 44px;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+form#user-form.user-form div#edit-field-numero-de-telephone-wrapper label.js-form-required.form-required::after {
+	content: " *";
+	color: #f00;
+}
+
