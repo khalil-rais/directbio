@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a region.
+ *
+ * Available variables:
+ * - content: The content for this region, typically blocks.
+ * - attributes: HTML attributes for the region <div>.
+ * - region: The name of the region variable as defined in the theme's
+ *   .info.yml file.
+ *
+ * @see template_preprocess_region()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if content %}
+	<div id="footer-region" class="container-fluid">
+		<div class="row row-eq-height align-items-center">		
+			<div class="col-md-12">
+				{{ footerlogo }}
+			</div>
+		</div>
+		<div class="row row-eq-height align-items-top">		
+			<div class="col-md-4">
+				{{ biotheme_footer }}
+			</div>
+			<div class="col-md-4">
+				{{ followus }}
+			</div>
+			<div class="col-md-4">
+				{{ contactinfo }}
+			</div>
+		</div>	
+	</div>
+	<div id="copyright" class="container-fluid">
+		<div class="row row-eq-height align-items-center">		
+			<div class="col-md-12 d-flex justify-content-center">
+				{{ biotheme_powered }}
+			</div>
+		</div>
+	</div>
+{% endif %}

@@ -1,0 +1,147 @@
+{#
+/**
+ * @file
+ *
+ * Default product template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ *
+ * 
+ * {{ vardumper(product_entity.product_id) }}
+ * {{ vardumper(product_entity.sku.value) }}
+ * {{ vardumper(product) }}
+ * 
+ * {{ vardumper(product_entity.variations) }}
+ * {{ vardumper(product_entity.variations.entity.sku) }}
+ * {{ vardumper(product_entity.variations.entity.sku.value) }}
+ * {{ vardumper(product_entity.variations.entity.sku.values) }} 
+ * {{ vardumper(product.field_vendor) }} 
+ * {{ vardumper(product.field_vendor.entity) }} 
+ * {{ vardumper(product.field_vendor.0.entity) }} 
+ * {{ vardumper(product.field_vendor.entity) }} 
+ * {{ vardumper(product.field_vendor.user_picture.0.entity.uri.value) }} 
+ * {{ vardumper(product.field_vendor['#items'].entity.field_name.value) }}
+ * {{ vardumper(product.field_vendor['#items'].entity.user_picture.0.entity.uri.value) }} 
+ *  	.entity.field_image.0.alt
+ * 	.entity.field_image.0.entity.uri.value
+ * 	{{ vardumper(product.field_category[0]['#title']) }}
+ * 	.entity.body.value|
+ * {{ vardumper(product.field_category[0]['#title']) }}
+ * {{ vardumper(product.field_category[0]["#options"].entity.description.0.value) }}
+ * {{ vardumper(product.field_category['#items'].entity.field_category_banner.0.entity.uri.value) }}
+ * @ingroup themeable
+ * {{ vardumper(product.field_category['#items'].entity.field_category_banner.0.entity.uri.value) }} 
+ */
+#}
+<!--INNER BANNER START-->
+<div id="inner-banner" class="catalogue_hygiene" style="background: url({{ file_url(product.field_category['#items'].entity.field_category_banner.0.entity.uri.value) }}) no-repeat left top/cover;";>
+	<div class="row">
+		<div class="col-md-10 offset-md-1">
+			<div class="container">
+				<h1>{{ product.field_category[0]['#title'] }}</h1>
+				<em>{{ product.field_category[0]["#options"].entity.description.0.value|raw }}</em>
+			</div>
+		</div>
+	</div>
+</div>
+  <!--INNER BANNER END--> 
+{{ product_breadcrumb }}
+{{ product_breadcrumb2 }}
+
+  <!--MAIN START-->
+<div id="main">
+	<section class="product-detail">
+		<div class="top-row">
+			<div class="container">
+				<div class="row">
+					{% if user.hasPermission('administer commerce_product_attribute') %}
+						<div class="col-md-12">
+							<a href="{{ edit_product }}" class="btn-style-1">Edit Prodcut<i class="fa fa-angle-right" aria-hidden="true"></i>
+							</a>
+						</div>
+					{% endif %}
+					<div class="col-md-5 col-sm-12 product-image">
+						<div class="frame zoom">
+							{{ product.field_photo }}
+						</div>
+					</div>
+					<div class="col-md-7 col-sm-12 product-main-info">
+						<div class="row">
+							<div class="col-md-12"> 
+								<div class="text-box">
+									<h2>{{ product.title }}</h2>
+								</div>
+								<div class="list-box latin-name-sku"> 
+									{% if product.field_latin_name %}
+										<span class="latin-name">{{ product.field_latin_name }}</span>
+									{% endif %}
+										<span class="sku">SKU: {{ product.variation_sku}}</span>
+								</div>
+							</div>
+							<div class="col-md-12"> 
+								<div class="list-box">
+									<span class="price">{{ product.variation_price }}</span>
+								</div>
+								<div class="list-box short-description">
+									{{ product.field_short_description }}
+								</div>
+							</div>
+							<div class="col-md-12">
+								{{ product.variations|without('title') }} 
+							</div>
+						</div>
+					</div>					
+				</div>
+				<div class="row product-details">
+					<div class="col-md-9">
+						<div class="row">
+							<div class="col-md-12 detailed-description"> 
+								{{ product.body }}
+							</div>
+							<div class="col-md-12 illustrations-wrapper"> 
+								{{ product.field_illustrations }}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="row">
+							<div class="col-md-12 how_to_grow">
+								{{ product.field_how_to_grow }} 
+							</div>
+							<div class="col-md-12 about_vendor">
+								<h4>About the Vendor</h4>
+								<div class="row">
+									<div class="col-md-4">
+										<img src="{{ file_url(product.field_vendor['#items'].entity.user_picture.0.entity.uri.value) }}" alt="" typeof="Image" class="img-fluid">									
+									</div>
+									<div class="col-md-8 contact-info-wrapper">
+										<ul class="contact-info">
+											<li><span class="icon fa fa-user"></span> {{ product.field_vendor['#items'].entity.field_name.value }}</li>
+											<li><span class="icon fa fa-map-marker"></span> {{ product.field_vendor['#items'].entity.field_address.value }}</li>
+											<li><span class="icon fa fa-phone"></span> {{ product.field_vendor['#items'].entity.field_phone.value }}</li>
+										</ul>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12 about_description">
+										{{ product.field_vendor['#items'].entity.field_about.value }} 
+									</div>									
+								</div>
+							</div>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
