@@ -1,0 +1,39 @@
+global:
+  version: 1.x
+  css:
+    theme:
+      css/custom.css: {}
+      https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css: { type: external, minified: true }
+      css/color.css: {}
+      css/responsive.css: {}      
+      css/flexslider.css: {}
+      css/owl.carousel.css: {}
+      css/font-awesome.min.css: {}      
+      css/animate.css: {}
+      css/custom-freelancemodule.css: {}
+      css/registration.css: {}
+      css/custom-pages.css: {}
+      js/slick/slick.css: {}
+      js/slick/slick-theme.css: {}
+  js:
+    https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js: { type: external, minified: true }
+    https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js: { type: external, minified: true }
+    js/owl.carousel.min.js: {}
+    js/jquery.zoom.js: {}
+    js/custom.js: {}
+    js/custom-freelancemodule.js: {}
+    js/slick/slick.js: {}
+    js/custom-page.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+
+styled-google-map:
+  version: 1.0
+  js:
+    //maps.google.com/maps/api/js: { type: external }
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

@@ -1,0 +1,94 @@
+	div.trapezoid {
+		border-bottom: 36px solid;
+		border-image-source: linear-gradient(#88bd23, #3aaa35);
+		border-image-slice: 36;
+		border-left: 36px solid;
+		border-right: 36px solid;
+		height: 0;
+		width: 100px;
+		transform: rotate(46deg);
+		position: absolute;
+		top: 0;
+		right: -34px;
+		display: inline-block;			
+	}
+	div.trapezoid2{
+		padding-top: 7px;
+		margin-left: -9px;
+		color: #6a6735;
+	}
+	div.trapezoid_wrapper {
+		position: absolute;
+		top: 23%;
+		display: inline-block;		
+	}
+
+	div.slick-track{
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+
+	.slick-slide{
+		border-color:#5b3b2b;
+		border-width: 2px;
+		border-style: solid;
+		border-radius: 10px;
+		padding: 4px;
+		margin: 0px 0px 0px -1px !important;
+		overflow: hidden;
+	}
+	div.bakeitaly_slider_element{
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		position: relative
+	}
+	
+	div.bakeitaly_slider_element_title{
+		padding: 30px 0px 80px 0px;
+		background-color: #cececd;
+		text-align: center;
+		color: #5b3b2b;
+		border-radius: 10px;
+		
+	}
+	
+	div.slick-slide.slick-current.slick-active.slick-center{
+		transform: scale(1.06,1.06);
+		background-color: #fff;
+		z-index: 10;
+	}
+	div.bakeitaly_slider_element_description{
+		padding-top: 80px;
+		min-height: 200px;
+		text-align: center;
+		color: #646464;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	div.bakeitaly_slider_element_button{
+		text-align: center;
+		padding-bottom: 30px;
+	}
+	div.bakeitaly_slider_element_button button.btn{
+		color: #fff;
+		background-color: #5b3b2b;
+		text-align: center;
+	}
+	section.center.slider.slick-initialized.slick-slider.slick-dotted{
+		width: 80%;
+	}
+	div.bakeitaly_slider_icon {
+		position: absolute;
+		top: 23%;
+		display: inline-block;
+		width: 100%;
+	}
+	div.bakeitaly_slider_icon i.item_icon{
+		background-image: url(icone.png);
+		width: 125px;
+		height: 125px;
+		display: block;
+		border-radius: 64px;
+		margin: 0 auto;
+	}

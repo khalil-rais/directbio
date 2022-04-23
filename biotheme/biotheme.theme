@@ -1,0 +1,651 @@
+<?php
+use Drupal\Component\Utility\NestedArray;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements template_preprocess_image().
+ */
+function biotheme_preprocess_image(&$vars) {
+
+  if ($vars['style_name'] == 'commerce_original') {
+    // Remove explicit width & height declaration.
+    unset($vars['width'], $vars['height'], $vars['attributes']['width'], $vars['attributes']['height']);
+  }
+}
+
+function biotheme_preprocess_field(&$variables, $hook){
+					
+					//var_dump(array_keys($variables));
+					if ($variables['field_name']=="title"){
+
+					}
+}
+
+function biotheme_preprocess_region(&$variables){
+	$user = \Drupal::currentUser();
+	$user = \Drupal\user\Entity\User::load($user->id());
+	
+	if($user->hasRole ("webmaster")){
+		$variables["my_user_role"]="webmaster";
+	}
+	elseif($user->hasRole ("professionnel")){
+		$variables["my_user_role"]="professionnel";
+		$query = \Drupal::entityQuery('node'); 
+		$query->condition('type', 'professionnel');
+		$query->condition('uid', $user->id());
+		$node_ids = $query->execute();
+		if (!empty($node_ids)) {
+			$nodes = array_keys(Node::loadMultiple($node_ids));
+			$variables["pro_nodes_role"]=$nodes[0];
+			//ob_start();
+			//var_dump( array_keys($nodes));
+			//$dumpy = ob_get_clean();
+			//\Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_region: '.$dumpy);
+		}
+		else{
+			\Drupal::logger('freelancemodule')->notice('No nodes');
+		}
+	}
+	
+	elseif($user->hasRole ("particulier")){
+		$variables["my_user_role"]="particulier";
+	}
+	else{
+		$variables["my_user_role"]="";
+	}
+}
+
+//Remove duplicate entries in the offer categories view
+function biotheme_views_pre_render(\Drupal\views\ViewExecutable $view) {
+  if ($view->id() == 'offer_taxonomy' && $view->current_display == 'block_2') {
+    $offer_list = array();
+    foreach ($view->result as $key => $value) {
+		//  kint($value); // inspect a row value for debugging purposes
+		
+		if (array_search($value->tid, $offer_list)===false){
+			$offer_list[$key]=$value->tid;
+		}
+		else{
+			unset ($view->result[$key]); // delete a row
+			
+		}		
+	}
+  }
+  elseif ($view->id() == 'check_card'){
+		$filters = $view->getExposedInput();
+		if (count($filters)==0){
+			foreach ($view->result as $key => $value) {
+				unset ($view->result[$key]); // delete a row		
+			}
+			
+		}
+		/*$filters = [];
+		foreach ($view->filter as $filter) {
+			if($filter->isExposed()) {
+				$filters[] = $filter;
+			}
+		}
+		kint($filters);	 */ 
+  }
+  elseif ($view->id() == 'news_tumbnails'){
+
+		$node = \Drupal::routeMatch()->getParameter('node');
+		//Extraire la catégorie à partir du noeud puis on l'intègre à la vue.			
+		
+		if ($node instanceof \Drupal\node\NodeInterface) {
+			$nid=$node->id();
+			foreach ($view->result as $key => $value) {
+				if ($nid==$value->nid){
+					unset ($view->result[$key]); // delete a row	
+				}
+					
+			}
+		}
+  }  
+}
+
+function biotheme_preprocess_block__roamazetogglemenu(&$variables) {
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$plugin_block = $block_manager->createInstance('views_block:pro_taxonomy-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_pro_output'] = $render;
+	
+}
+
+/*
+function biotheme_preprocess_block(&$variables) {
+	//if ($variables["plugin_id"]=="views_block:offer_taxonomy-block_1") {
+
+	//}	
+}
+*/
+
+function biotheme_preprocess_node__article(array &$variables) {
+	//Third bottom block
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];	
+	$plugin_block = $block_manager->createInstance('views_block:popular_product-block_2', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();	
+	$variables['my_node_popular_product'] = $render;
+	
+	$plugin_block = $block_manager->createInstance('views_block:same_article-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();	
+	$variables['my_node_article_output'] = $render;		
+		
+}
+	
+function biotheme_preprocess_node__front_page(array &$variables) {
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$plugin_block = $block_manager->createInstance('views_block:popular_product-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_popular_product_output'] = $render;
+}
+
+function biotheme_preprocess_node__news__full(array &$variables) {
+
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$plugin_block = $block_manager->createInstance('views_block:news_tumbnails-block_1', $config);
+		
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_news_tumbnails_output'] = $render;
+	///////////////////////////////
+	$user = \Drupal\user\Entity\User::load(1);
+	$field_nom_et_prenom = $user->get("field_nom_et_prenom")->getValue();
+	if (isset($field_nom_et_prenom[0]["value"])){
+		$variables ['field_nom_et_prenom'] = $field_nom_et_prenom[0]["value"];
+		\Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_node__news__full:'.$variables ['field_nom_et_prenom']."a");
+	}
+}
+
+//		function biotheme_preprocess_region__banner(array &$variables) {
+//			$block_manager = \Drupal::service('plugin.manager.block');
+//			$config = [];
+//		
+//			
+//			//Third bottom block
+//			//roamazesignup
+//			//$plugin_block = $block_manager->createInstance('views_block:same_pro-block_1', $config);
+//			$block = \Drupal\block\Entity\Block::load('freelancemodule_search');
+//			$variables['my_freelancemodule_search'] = \Drupal::entityTypeManager()
+//		  ->getViewBuilder('block')
+//		  ->view($block);
+//		
+//			$current_path = \Drupal::service('path.current')->getPath();
+//			if ($current_path=="/news"){		
+//				$block = \Drupal\block\Entity\Block::load('newsbanner');
+//				$variables['my_freelancemodule_newsbanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);
+//			}
+//			elseif($current_path=="/user/login"){
+//				$block = \Drupal\block\Entity\Block::load('loginbanner');
+//				$variables['my_freelancemodule_loginbanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);		
+//					/*$query = \Drupal::entityQuery('block');
+//					$nids = $query->execute();		
+//				ob_start();
+//				var_dump( array_keys($nids));
+//				$dumpy = ob_get_clean();
+//				\Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_region__banner: '.$dumpy);*/
+//			}
+//			elseif($current_path=="/offre"){
+//				$block = \Drupal\block\Entity\Block::load('offerbanner');
+//				$variables['my_freelancemodule_offerbanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);
+//				
+//			}
+//			elseif($current_path=="/annuaire-pro"){
+//				$block = \Drupal\block\Entity\Block::load('annuaireprobanner');
+//				$variables['my_freelancemodule_annuaireprobanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);
+//				
+//			}
+//			elseif($current_path=="/convention"){
+//				$block = \Drupal\block\Entity\Block::load('conventionbanner');
+//				$variables['my_freelancemodule_conventionbanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);
+//				
+//			}
+//			elseif($current_path=="/contact"){
+//				$block = \Drupal\block\Entity\Block::load('contactbanner');
+//				$variables['my_freelancemodule_contactbanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);		
+//			}
+//			elseif($current_path=="/" or  $current_path=="/node/65" ){
+//				$block = \Drupal\block\Entity\Block::load('loginbanner');
+//				$variables['my_freelancemodule_loginbanner'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);		
+//			
+//				$block = \Drupal\block\Entity\Block::load('connexionutilisateur');
+//				$variables['my_freelancemodule_login_block'] = \Drupal::entityTypeManager()
+//			->getViewBuilder('block')
+//			->view($block);
+//				/*$query = \Drupal::entityQuery('block');
+//				$nids = $query->execute();		
+//				ob_start();
+//				var_dump( array_keys($nids));
+//				$dumpy = ob_get_clean();
+//				\Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_region__banner: '.$dumpy);*/
+//			}
+//		//	$plugin_block = $block_manager->createInstance('block:roamazesignup', $config);
+//		//	//freelancemodule_search
+//		//	$access_result = $plugin_block->access(\Drupal::currentUser());
+//		//	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+//		//		return [];
+//		//	}
+//		//	$render = $plugin_block->build();
+//		//	
+//		//	$variables['my_freelancemodule_search'] = $render;
+//		//		ob_start();
+//		//		var_dump( array_keys ($render));
+//		//		$dumpy = ob_get_clean();
+//		//		\Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_region__banner1: '.$dumpy);
+//				
+//				
+//		//./freelancemodule/freelancemodule.theme:function biotheme_preprocess_region__banner(array &$variables) {
+//		//./freelancemodule/freelancemodule.theme:                \Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_region__banner: '.$dumpy);
+//		//./freelancemodule/templates/freelancemodule.theme:function biotheme_preprocess_region__banner(array &$variables) {
+//		//./freelancemodule/templates/freelancemodule.theme:              \Drupal::logger('freelancemodule')->notice('freelancemodule_preprocess_region__banner1: '.$dumpy);
+//		
+//				
+//		}
+
+
+function biotheme_preprocess_region__footer(array &$variables) {
+	
+	$block = \Drupal\block\Entity\Block::load('footerlogo');
+	$variables['footerlogo'] = \Drupal::entityTypeManager()
+		->getViewBuilder('block')
+		->view($block);		
+		
+	$block = \Drupal\block\Entity\Block::load('biotheme_footer');
+	$variables['biotheme_footer'] = \Drupal::entityTypeManager()
+		->getViewBuilder('block')
+		->view($block);		
+
+	$block = \Drupal\block\Entity\Block::load('followus');
+	$variables['followus'] = \Drupal::entityTypeManager()
+		->getViewBuilder('block')
+		->view($block);		
+
+	$block = \Drupal\block\Entity\Block::load('contactinfo');
+	$variables['contactinfo'] = \Drupal::entityTypeManager()
+		->getViewBuilder('block')
+		->view($block);				
+
+	$block = \Drupal\block\Entity\Block::load('biotheme_powered');
+	$variables['biotheme_powered'] = \Drupal::entityTypeManager()
+		->getViewBuilder('block')
+		->view($block);		
+}
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+function biotheme_preprocess_node__view__convention_detail(array &$variables) {
+
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+
+	//Second bottom block
+	
+	$plugin_block = $block_manager->createInstance('views_block:same_pro-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_pro_categ_output'] = $render;
+	
+	//Other Conventions
+	$plugin_block = $block_manager->createInstance('views_block:convention-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_other_convention_block'] = $render;
+	
+	
+	/*
+	//Third bottom block
+	$plugin_block = $block_manager->createInstance('prise_rdv_block', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_prise_rdv_block'] = $render;
+	
+	//Fourth Bottom Block
+	$plugin_block = $block_manager->createInstance('contact_pro_block', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_contact_pro_block'] = $render;
+	
+	*/
+}
+
+
+function biotheme_preprocess_node__professionnel__full(array &$variables) {
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$plugin_block = $block_manager->createInstance('views_block:offer_taxonomy-block_2', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_pro_offer_output'] = $render;
+	
+	//Second bottom block
+	$plugin_block = $block_manager->createInstance('views_block:same_pro-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_pro_categ_output'] = $render;
+	
+	//Third bottom block
+	$plugin_block = $block_manager->createInstance('prise_rdv_block', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_prise_rdv_block'] = $render;
+	
+	//Fourth Bottom Block
+	$plugin_block = $block_manager->createInstance('contact_pro_block', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_contact_pro_block'] = $render;
+	
+	
+}
+
+function biotheme_preprocess_node(array &$variables) {
+	if (isset($variables['node'])){
+		if ($variables['node']->getType() == 'front_page'){
+			$viewResults = views_get_view_result('new_arrived_product', 'block_1');
+			foreach($viewResults as $viewRow) {
+				$entity = $viewRow->_entity;
+				$target_id = $entity->get('field_photo_detail')->getValue()[0]['target_id'];
+				$file = \Drupal\file\Entity\File::load($target_id);
+				$file_uri = $file->getFileUri();
+				$var['photo_url'] = file_create_url($file_uri);
+				$var['title'] = $entity->get('title')->getValue()[0]['value'];
+				$var['price'] = $entity->get('price')->getValue()[0]['number'];
+				$variables['products'][] = $var;
+			}
+		}
+	}
+}
+
+function biotheme_form_contact_message_feedback_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+
+	// Name
+  $form['name']['#prefix'] = '<div class="row"><div class="col-md-6 col-sm-6">';
+  $form['name']['#suffix'] = '</div>';
+  $form['name']['#attributes']['placeholder'][] = $form['name']['#title'].'*';
+  $form['name']['#attributes']['class'][] = 'form-control';
+  unset($form['name']['#title']);
+
+  // Mail
+  $form['mail']['#prefix'] = '<div class="col-md-6 col-sm-6">';
+  $form['mail']['#suffix'] = '</div></div>';
+  $form['mail']['#attributes']['placeholder'][] = $form['mail']['#title'].'*';
+  $form['mail']['#attributes']['class'][] = 'form-control';
+  unset($form['mail']['#title']);
+
+  // Subject
+  $form['field_select_subject_contact']['#prefix'] = '<div class="row"><div class="col-md-12 col-sm-12">';
+  $form['field_select_subject_contact']['#suffix'] = '</div></div>';
+  $form['field_select_subject_contact']['widget']['value']['#attributes']['class'][] = 'form-control';
+  $form['field_select_subject_contact']['widget']['value']['#attributes']['placeholder'][] = $form['field_select_subject_contact']['widget']['#title'].'*';
+  $form['field_select_subject_contact']['widget']['#title'] = '';
+  unset($form['field_select_subject_contact']['widget']['value']['#title']);
+
+	// Phone number
+  $form['field_phone_number_contact']['#prefix'] = '<div class="row"><div class="col-md-6 col-md-6">';
+  $form['field_phone_number_contact']['#suffix'] = '</div>';
+  $form['field_phone_number_contact']['widget'][0]['value']['#attributes']['placeholder'][] = $form['field_phone_number_contact']['widget'][0]['#title'];
+  $form['field_phone_number_contact']['widget']['value']['#attributes']['class'][] = 'form-control';
+  unset($form['field_phone_number_contact']['widget'][0]['value']['#title']);
+
+  //Command number
+
+  $form['field_command_number_contact']['widget'][0]['value']['#attributes']['placeholder'][] = $form['field_command_number_contact']['widget'][0]['#title'];
+  $form['field_command_number_contact']['widget']['value']['#attributes']['class'][] = 'form-control';
+  unset($form['field_command_number_contact']['widget'][0]['value']['#title']);
+  $form['field_command_number_contact']['#prefix'] = '<div class="col-md-6 col-md-6">';
+  $form['field_command_number_contact']['#suffix'] = '</div></div>';
+
+  // Message
+  $form['message']['widget']['value']['#attributes']['class'][] = 'form-control';
+  $form['message']['widget'][0]['value']['#attributes']['placeholder'][] = $form['message']['widget'][0]['#title'].'*';
+  $form['message']['widget'][0]['#title'] = '';
+  unset($form['message']['widget'][0]['value']['#title']);
+  $form['message']['widget']['#prefix'] = '<div class="row"><div class="col-md-12">';
+  $form['message']['widget']['#suffix'] = '</div></div>';
+
+    // Submit
+  $form['actions']['#prefix'] = '<div class="col-md-12">';
+  $form['actions']['#suffix'] = '</div>';
+  $form['actions']['preview']['#access'] = FALSE;
+}
+
+function biotheme_preprocess_paragraph__convention (&$variables) {
+
+/*
+$user = \Drupal::currentUser();
+$order->get('field_deplacements')->getValue()
+
+			$user = \Drupal\user\Entity\User::load($this->currentUser->id());
+			$user_mail = $user->get("mail")->getValue();				
+			$user_field_user_name = $user->get("field_user_name")->getValue();
+
+*/		
+/*
+	$user = \Drupal::currentUser();
+	$user = \Drupal\user\Entity\User::load($user->id());
+	$field_carte_de_reduction = $user->get('field_carte_de_reduction')->getValue();
+	if (isset($field_carte_de_reduction) and count($field_carte_de_reduction)>0){		
+		$variables["convention_id"]=$field_carte_de_reduction[0]["value"];
+	}
+	else{
+		$variables["convention_id"]=0;
+	}
+*/
+}
+
+function biotheme_preprocess_html(&$variables) {
+	$variables['#attached']['drupalSettings']['path']['themeUrl'] = \Drupal::theme()->getActiveTheme()->getPath();
+	// echo $variables['afficher_cookies_message'];
+	if (!isset($_SESSION['afficher_cookies_message']) and \Drupal::currentUser()->isAnonymous()){
+		$variables['afficher_cookies_message'] = TRUE;
+	}
+	$current_path = \Drupal::service('path.current')->getPath();
+	if ($current_path=="/offre"){
+/*$bid = 'views_block:offer_taxonomy-block_1'; 
+$block = \Drupal\block_content\Entity\BlockContent::load($bid);
+$render = \Drupal::entityTypeManager()->getViewBuilder('block_content')->view($block);*/
+
+/*$block = \Drupal\block\Entity\Block::load('offer_taxonomy-block_1');
+$variables['my_block_output'] = \Drupal::entityTypeManager()
+  ->getViewBuilder('block')
+  ->view($block);*/
+  		
+	}
+}
+/*
+function biotheme_theme_suggestions_form_alter(array &$suggestions, array $variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+	if ( preg_match ( '/register/' , $current_path) ){
+		
+		ob_start();
+		var_dump( array_keys($variables));
+		$dumpy = ob_get_clean();
+		\Drupal::logger('freelancemodule')->notice('freelancemodule_theme_suggestions_form_alter: '.$dumpy);
+				
+		$suggestions[] = 'form__registration';
+	}	
+}
+*/
+
+function biotheme_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+  if ($element['#type'] == 'submit' && preg_match ( '/edit-submit/' , $element['#id'])) {	  
+		
+	$current_path = \Drupal::service('path.current')->getPath();
+	if ( (preg_match ( '/^\/product/' , $current_path) or preg_match ( '/^\/fr\/product/' , $current_path) or preg_match ( '/^\/en\/product/' , $current_path)) && $element["#value"]->__toString()== t("Add to cart")){		
+		$suggestions[] = 'input__product__subject';
+	}		
+  }
+}
+
+function biotheme_preprocess_views_view_unformatted__annuaire_pro(&$variables){
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$plugin_block = $block_manager->createInstance('views_block:pro_taxonomy-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_pro_output'] = $render;
+}
+/*
+function biotheme_preprocess_views_view_unformatted(&$variables){
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$plugin_block = $block_manager->createInstance('views_block:offer_taxonomy-block_1', $config);
+	$access_result = $plugin_block->access(\Drupal::currentUser());
+	if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+		return [];
+	}
+	$render = $plugin_block->build();
+	
+	$variables['my_block_output'] = $render;
+}
+*/
+
+/*
+function biotheme_preprocess_breadcrumb(&$variables){
+
+  $menu_tree = Drupal::menuTree();
+  $parameters = $menu_tree->getCurrentRouteMenuTreeParameters('main');
+  $tree = $menu_tree->load('main', $parameters);
+
+  do {
+    $current_tree = biotheme_get_current_menu_tree($tree);
+    if (isset($current_tree)){
+      $current_tree_f = $current_tree;
+      unset($current_tree_f['data_subtree']);
+      $current_tree_final[] = $current_tree_f;
+    }
+    $tree = $current_tree['data_subtree'];   
+  } while ($tree);
+
+  if (isset($current_tree_final)){
+    $variables['tree'] = $current_tree_final;
+  }
+
+
+}
+*/
+function biotheme_get_current_menu_tree($tree){
+
+ foreach ($tree as $data) {
+  if ($data->inActiveTrail){
+    $link = $data->link;
+    $url = $link->getUrlObject();
+    $url->setOption('set_active_class', TRUE);
+    if (isset($data->options)) {
+        $url->setOptions(NestedArray::mergeDeep($url->getOptions(), $data->options));
+    }    
+    return array( 'title' => $link->getTitle(),
+                  'link' => $url,
+                  'data_subtree' => $data->subtree
+                );
+  }
+ }  
+}
+
+function biotheme_preprocess_commerce_product(&$variables){
+  $current_path = \Drupal::service('path.current')->getPath();
+  $base_url = \Drupal::request()->getBaseUrl();
+  $variables['edit_product'] = $base_url.$current_path.'/edit';
+  
+	//Breadcrumb block
+	$block_manager = \Drupal::service('plugin.manager.block');
+	$config = [];
+	$block = \Drupal\block\Entity\Block::load('biotheme_breadcrumbs');
+	$variables['product_breadcrumb'] = \Drupal::entityTypeManager()->getViewBuilder('block')->view($block);
+  
+}  
+
+function biotheme_preprocess_views_view_table(&$variables){
+  if (isset($variables['caption']['#markup'])){
+    if ($variables['caption']['#markup'] == 'final_cart'){
+      $variables['final_cart'] = TRUE;
+    }
+    else if ($variables['caption']['#markup'] == 'order_information'){
+      $variables['order_information'] = TRUE;
+    }
+  } 
+}
+
+function biotheme_form_alter(&$form, &$form_state, $form_id) {
+  if($form_id == 'user_login_form') {
+    $form['#attributes']['class'][] = 'container';
+  }  
+}
